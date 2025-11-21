@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Институт системного анализа и управления</title>
+    <style>
+        /* Сброс и базовые стили */
+        *, *::before, *::after { box-sizing: border-box; }
+        body, h1, h2, h3, p, ul { margin: 0; padding: 0; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; }
+        body { font-family: Arial, sans-serif; line-height: 1.5; color: #333; background: #f5f5f5; }
+
+        /* Основные контейнеры */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+		.university-header {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+    background: #f9e6d2;
+}
+.university-header-img {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+        .header-top {
+            background: #333;
+            color: #fff;
+            padding: 8px 0;
+            font-size: 14px;
+            text-align: center;
+        }
+        .main-nav {
+            padding: 15px 0;
+        }
+        .main-nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            list-style: none;
+            justify-content: center;
+        }
+        .main-nav a {
+            color: #333;
+            font-weight: bold;
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+        .main-nav a:hover { color: #c7851d; }
+
+        /* Hero + Slider area */
+        .hero {
+            position: relative;
+            height: 400px;
+            background: #333 url('./isau_files/1.jpg') center/cover no-repeat;
+            margin-bottom: 30px;
+        }
+        .hero::after {
+            content: "Институт системного анализа и управления";
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 24px;
+            border-radius: 5px;
+        }
+
+        /* Новости (вместо старого таба) */
+        .news-block {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .news-block h3 {
+            margin-bottom: 15px;
+            color: #c7851d;
+            border-bottom: 2px solid #c7851d;
+            padding-bottom: 8px;
+        }
+        .news-block ul {
+            list-style: none;
+        }
+        .news-block li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        .news-block a {
+            color: #0066cc;
+        }
+        .news-block a:hover { text-decoration: underline; }
+
+        /* Основной контент — две колонки */
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .content-left {
+            flex: 2;
+            min-width: 300px;
+        }
+        .content-right {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Карточки кафедр и блоков */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+        .card:hover { transform: translateY(-5px); }
+        .card-img {
+    position: relative;
+    padding-bottom: 66%;        /* соотношение 3:2 — подходит почти всем вашим фото */
+    overflow: hidden;
+    background: #f0f0f0;
+}
+.card-img img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;          /* главное волшебство */
+    transition: transform 0.4s;
+}
+.card:hover .card-img img {
+    transform: scale(1.05);
+}
+.content-right .card img {
+    width: 100%;
+    height: auto;
+    max-width: 295px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 6px;
+}
+        .card-body {
+            padding: 15px;
+        }
+        .card h3 {
+            color: #c7851d;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .card p { font-size: 14px; margin-bottom: 10px; }
+        .read-more {
+            display: inline-block;
+            background: #c7851d;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .read-more:hover { background: #a86b16; }
+
+        /* Подвал */
+        footer {
+            background: #333;
+            color: #ccc;
+            padding: 40px 0 20px;
+            font-size: 14px;
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .footer-column { flex: 1; min-width: 250px; }
+        .footer-column h4 {
+            color: #fff;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #555;
+            padding-bottom: 8px;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+            color: #999;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-content { flex-direction: column; }
+            .hero { height: 300px; }
+            .hero::after { font-size: 20px; padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header>
+        <div class="university-header">
+    <img src="./isau_files/head.png" alt="Университет Дубна – Лучший выбор для будущего профессионала" class="university-header-img">
+</div>
+        <nav class="main-nav container">
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">Поступающим</a></li>
+                <li><a href="#">Студентам</a></li>
+                <li><a href="#">Аспирантам</a></li>
+                <li><a href="#">Учебный процесс</a></li>
+                <li><a href="#">Наука</a></li>
+                <li><a href="#">Инновации</a></li>
+                <li><a href="#">Портал ИСАУ</a></li>
+                <li><a href="#">Виртуальный тур</a></li>
+                <li><a href="#">Галерея</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    
+    
+
+    <div class="container">
+
+        <!-- Новости -->
+        <section class="news-block">
+            <h3>Новости</h3>
+            <ul>
+                <li><a href="#">Публикация заказного тематического номера Международного журнала “Artificial Intelligence Advances”</a></li>
+                <li><a href="#">Международная IT-школа “Machine Learning, Parallel and Hybrid Computations & Big Data Analytics”</a></li>
+                <li><a href="#">Летняя компьютерная школа «Аналитика Больших Данных Дубна-2019»</a></li>
+                <li><a href="#">I Всероссийский семинар «Искусственный интеллект, когнитивное моделирование и интеллектуальная робототехника»</a></li>
+            </ul>
+            <p style="text-align:right; margin-top:10px;"><a href="#">Архив новостей →</a></p>
+        </section>
+
+        <!-- Основной контент: две колонки -->
+        <div class="main-content">
+
+            <!-- Левая колонка — описание и кафедры -->
+            <div class="content-left">
+
+                <h2 style="color:#c7851d; margin-bottom:20px;">Об Институте Системного анализа и управления</h2>
+                <p style="text-align:center;"><img src="./isau_files/vypusk.jpg" alt="Выпускники"></p>
+                <p style="text-align:justify; margin:20px 0;">
+                    <strong>Институт системного анализа и управления (Институт САУ)</strong> является структурным подразделением Университета «Дубна».
+                </p>
+                <p style="text-align:center;">
+                    <a href="#" style="background:#c7851d;color:#fff;padding:10px 20px;border-radius:5px;display:inline-block;">
+                        Виртуальная экскурсия по Институту
+                    </a>
+                </p>
+
+                <h2 style="color:#c7851d; margin:30px 0 20px;">Кафедры института</h2>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="./isau_files/sau-foto.jpg" alt="Кафедра САУ">
+                        <div class="card-body">
+                            <h3>Кафедра системного анализа и управления</h3>
+                            <p>Зав. кафедрой — д.т.н., проф. Черемисина Е.Н.<br>Тел: +7(49621) 6-60-10<br>E-mail: ipank@uni-dubna.ruipank@uni-dubna.ru</p>
+                            <a href="#" class="read-more">Подробнее →</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="./isau_files/rivs-foto.jpg" alt="РИВС">
+                        <div class="card-body">
+                            <h3>Кафедра распределённых информационно-вычислительных систем</h3>
+                            <p>Зав. кафедрой — д.т.н., проф. Кореньков В.В.<br>Тел: +7(49621) 6-60-25<br>E-mail: solga@uni-dubna.ru</p>
+                            <a href="#" class="read-more">Подробнее →</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="./isau_files/iuts-foto.jpg" alt="ИУТС">
+                        <div class="card-body">
+                            <h3>Кафедра интеллектуального управления техническими системами</h3>
+                            <p>Зав. кафедрой — к.т.н., доц. Крюков Ю.А.<br>Тел: +7(49621) 6-60-19<br>E-mail: iuts@uni-dubna.ru</p>
+                            <a href="#" class="read-more">Подробнее →</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="./isau_files/tseiu-foto.jpg" alt="Цифровая экономика">
+                        <div class="card-body">
+                            <h3>Кафедра цифровой экономики и управления</h3>
+                            <p>Зав. кафедрой — к.э.н., доц. Тюпикова Т.В.<br>Тел: +7(49621) 6-60-64<br>E-mail: shamef-kate@yandex.ru</p>
+                            <a href="#" class="read-more">Подробнее →</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="./isau_files/it-foto.jpg" alt="ИТ">
+                        <div class="card-body">
+                            <h3>Кафедра информационных технологий</h3>
+                            <p>Зав. кафедрой — к.ф.-м.н. Токарева Н.А.<br>Тел: +7(49621) 6-60-25.<br>E-mail: solga@uni-dubna.ru</p>
+                            <a href="#" class="read-more">Подробнее →</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="./isau_files/gis-foto.jpg" alt="ГИС">
+                        <div class="card-body">
+                            <h3>Кафедра геоинформационных систем и технологий</h3>
+                            <p>Зав. кафедрой — к.т.н., доц. Любимова А.В.<br>Телефон кафедры: +7 (49621)-6-61-09.<br>E-mail: shamef-kate@yandex.ru</p>
+                            <a href="#" class="read-more">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая колонка — полезные ссылки -->
+            <div class="content-right">
+                <div class="card" style="text-align:center;">
+                    <a href="#"><img src="./isau_files/shz.jpg" alt="Шаблоны заявлений"></a>
+                </div>
+                <div class="card" style="text-align:center; margin-top:20px;">
+                    <a href="#"><img src="./isau_files/knopka_faq.jpg" alt="Памятка первокурсника"></a>
+                </div>
+                <div class="card" style="margin-top:20px; text-align:center;">
+                    <img src="./isau_files/presentation_isau.jpg" alt="Презентация">
+                </div>
+                <div class="card" style="margin-top:20px; padding:20px; background:#f9f9f9;">
+                    <p style="text-align:center;">
+                        <img src="./isau_files/vp_logo.gif" alt="Visual Paradigm" style="max-width:180px;">
+                    </p>
+                    <p style="font-size:13px; text-align:center;">
+                        
+Visual Paradigm provides Dubna State University with UML and BPMN tools under the Academic Training Partner Program.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+<footer style="background:#fdfaf5; border-top:1px solid #e8d9c2; padding:10px 0; text-align:center; font-size:12px; color:#777;">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 15px;">
+        <span>© 2009–2025 Сайт Института Системного анализа и управления. Все права защищены.</span>
+        <span>
+            <a href="https://metrika.yandex.ru/stat/?id=28300301&from=informer" target="_blank" rel="nofollow">
+                <img src="https://informer.yandex.ru/img/?id=28300301&color=3_0_FFFFCDFF_FADFADFF_0_pageviews" 
+                     style="width:88px; height:31px; border:0;" 
+                     alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" />
+            </a>
+        </span>
+    </div>
+</footer>
+
+</body>
+</html>
