@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Н.В. Гоголь — Женитьба</title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #faf8f2;
+            color: #333;
+        }
+        h1, h2 { text-align: center; color: #8b0000; }
+        #content { min-height: 100vh; }
+        #loading {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-style: italic;
+        }
+        .chapter-title {
+            text-align: center;
+            margin: 60px 0 40px;
+            font-size: 1.8em;
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Н.В. Гоголь</h1>
+<h2>Женитьба<br><small>Совершенно невероятное событие в двух действиях</small></h2>
+
+<div id="content"></div>
+<div id="loading">Загрузка следующей главы...</div>
+
+<script>
+    const TOTAL_CHAPTERS = 9;                    // у нас glava1.html — glava9.html
+    let currentChapter = 1;
+    const content = document.getElementById('content');
+    const loading = document.getElementById('loading');
+    loading.style.display = 'none';
+
+    // Функция: получить номер главы из URL hash
+    function getChapterFromHash() {
+        const hash = window.location.hash.slice(1); // убираем #
+        const match = hash.match(/^glava(\d+)$/i);
+        if (match) {
+            const num = parseInt(match[1], 10);
+            if (num >= 1 && num <= TOTAL_CHAPTERS) {
+                return num;
+            }
+        }
+        return 1; // по умолчанию
+    }
+
+    // Функция: обновить hash в URL
+    function setChapterHash(chapter) {
+        history.pushState(null, null, `#glava${chapter}`);
+    }
+
+    // Загрузка одной главы
+    function loadChapter(chapter) {
+        if (chapter > TOTAL_CHAPTERS) return;
+
+        loading.style.display = 'block';
+
+        fetch(`glava${chapter}.html`)
+            .then(r => {
+                if (!r.ok) throw new Error(`Глава ${chapter} не найдена`);
+                return r.text();
+            })
+            .then(html => {
+                // Создаём временный div, чтобы вытащить содержимое
+                const temp = document.createElement('div');
+                temp.innerHTML = html;
+
+                // Добавляем заголовок главы
+                const title = document.createElement('div');
+                title.className = 'chapter-title';
+                title.innerHTML = `<strong>Глава ${chapter}</strong>`;
+                content.appendChild(title);
+
+                // Добавляем содержимое главы
+                const bodyContent = temp.querySelector('body') || temp;
+                content.appendChild(bodyContent.cloneNode(true));
+
+                loading.style.display = 'none';
+
+                // Обновляем URL
+                setChapterHash(chapter);
+
+                // Прокрутка чуть вверх, чтобы заголовок был виден
+                window.scrollBy(0, -100);
+            })
+            .catch(err => {
+                console.error(err);
+                loading.innerHTML = `<p style="color:red;">Ошибка: ${err.message}</p>`;
+            });
+    }
+
+    // Infinite scroll: подгрузка при достижении низа страницы
+    window.addEventListener('scroll', () => {
+        if (window.inner
+
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+            if (currentChapter < TOTAL_CHAPTERS) {
+                currentChapter++;
+                loadChapter(currentChapter);
+            }
+        }
+    });
+
+    // === ЗАПУСК ПРИЛОЖЕНИЯ ===
+    currentChapter = getChapterFromHash();
+    loadChapter(currentChapter);
+
+    // Если пользователь уходит с первой главы — начинаем подгрузку дальше
+    if (currentChapter === 1) {
+        // Подгружаем вторую главу заранее (чтобы не ждать)
+        setTimeout(() => {
+            if (currentChapter === 1) {
+                currentChapter = 2;
+                loadChapter(2);
+            }
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>
